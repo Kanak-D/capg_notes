@@ -1,0 +1,91 @@
+Enter password: **********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.32 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| test               |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use test;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_test |
++----------------+
+| employees      |
++----------------+
+1 row in set (0.01 sec)
+
+mysql> desc tables;
+ERROR 1146 (42S02): Table 'test.tables' doesn't exist
+mysql> desc employees;
++-------------+-----------------------+------+-----+---------+-------+
+| Field       | Type                  | Null | Key | Default | Extra |
++-------------+-----------------------+------+-----+---------+-------+
+| employee_id | int                   | NO   | PRI | NULL    |       |
+| first_name  | varchar(50)           | YES  |     | NULL    |       |
+| last_name   | varchar(50)           | YES  |     | NULL    |       |
+| age         | int                   | YES  |     | NULL    |       |
+| gender      | enum('male','female') | YES  |     | NULL    |       |
++-------------+-----------------------+------+-----+---------+-------+
+5 rows in set (0.02 sec)
+
+mysql> alter table employees add qualification varchar(50);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employees;
++---------------+-----------------------+------+-----+---------+-------+
+| Field         | Type                  | Null | Key | Default | Extra |
++---------------+-----------------------+------+-----+---------+-------+
+| employee_id   | int                   | NO   | PRI | NULL    |       |
+| first_name    | varchar(50)           | YES  |     | NULL    |       |
+| last_name     | varchar(50)           | YES  |     | NULL    |       |
+| age           | int                   | YES  |     | NULL    |       |
+| gender        | enum('male','female') | YES  |     | NULL    |       |
+| qualification | varchar(50)           | YES  |     | NULL    |       |
++---------------+-----------------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> alter table employees alter column first_name varchar(100);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar(100)' at line 1
+mysql> ALTER TABLE employees
+    -> ALTER COLUMN first_name VARCHAR(100);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'VARCHAR(100)' at line 2
+mysql> alter table employees modify first_name varchar(100);
+Query OK, 5 rows affected (0.06 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> desc employees;
++---------------+-----------------------+------+-----+---------+-------+
+| Field         | Type                  | Null | Key | Default | Extra |
++---------------+-----------------------+------+-----+---------+-------+
+| employee_id   | int                   | NO   | PRI | NULL    |       |
+| first_name    | varchar(100)          | YES  |     | NULL    |       |
+| last_name     | varchar(50)           | YES  |     | NULL    |       |
+| age           | int                   | YES  |     | NULL    |       |
+| gender        | enum('male','female') | YES  |     | NULL    |       |
+| qualification | varchar(50)           | YES  |     | NULL    |       |
++---------------+-----------------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql>
